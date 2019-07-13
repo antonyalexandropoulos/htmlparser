@@ -1,10 +1,12 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
-class HTMLelement{
+public class HTMLelement{
 
 	private String tag;
 	private ArrayList<HTMLelement> children = new ArrayList<HTMLelement>();
 	private HTMLelement parent;	
+	private HashMap<String,String> attrib = new HashMap<>();
 
 	public HTMLelement(String tag,HTMLelement parent){
 		this.tag = tag;
@@ -32,14 +34,6 @@ class HTMLelement{
 	@Override
 	public String toString(){
 		return this.tag;
-	}
-
-	public static void main(String[] args){
-	HTMLelement h = new HTMLelement("kappa");
-	h.addChild(new HTMLelement("ss",h));
-	h.printChildren();
-	
-
 	}
 }
 
