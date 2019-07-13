@@ -24,19 +24,32 @@ public class HTMLparser{
 					next = html.charAt(++index);
 				}
 				StringBuilder tag = new StringBuilder();
+				StringBuilder data = new StringBuilder();
 				while(index<n && next!=' ' && next!='>'){
 
 					//System.out.println(next);
 					tag.append(next);
 					next = html.charAt(++index);
+					/*
+					if (next=='>' && ++index<n && html.charAt(index)!='<'){
+						
+						while(html.charAt(index)!='<'){
+							data.append(html.charAt(index++));
+						}
+					}
+					*/
 				}
+
 				if(endtag){
 					stack.pop();
 				}
 				else{
 					
 					System.out.println("parent " + stack.peek()+" child " +tag.toString());
-					stack.push(new HTMLelement(tag.toString(),stack.peek()));
+
+					HTMLelement curr= new HTMLelement(tag.toString(),stack.peek());
+					stack.peek().addChild(curr);
+					stack.push(curr);
 
 				}
 				System.out.println( tag.toString());
@@ -46,10 +59,17 @@ public class HTMLparser{
 		return  root;
 	}
 
-
+	public static void traverse(HTMLelement e,int depth){
+		for(int i=0;i<depth;++i)System.out.print(" ");
+		System.out.println(e);
+		//System.out.println(e.getData());
+		for(HTMLelement h:e.getChildren()){
+			traverse(h,depth*2);
+		}
+	}
 	public static void main(String[] args){
 		HTMLparser p = new HTMLparser();
-		p.parse("<html><head><title>Test</title></head><body><h1>Parse me!</h1></body></html>");
+		traverse(p.parse("<html><head><title>Test</title></head><body><h1>Parse me!</h1></body></html>"),1);
 
 	}
 
