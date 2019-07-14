@@ -44,6 +44,14 @@ public class HTMLelement{
 		return this.parent;
 	}
 
+	public void setAttrib(String key,String value){
+		this.attrib.put(key,value);
+	}
+
+	public HashMap<String,String> getAttrib(){
+		return this.attrib;
+	}
+
 	@Override
 	public String toString(){
 		return this.tag;
