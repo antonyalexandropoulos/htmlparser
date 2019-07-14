@@ -7,7 +7,12 @@ public class HTMLparser{
 	public HTMLparser(){
 
 	}
-
+	private void parseAttrib(StringBuilder tmp,HashMap<String,String> attrib){
+		String s = tmp.toString();
+		//System.out.println("parsing "+s);
+		String [] split = s.split("=");
+		attrib.put(split[0],split[1]);
+	}
 	public HTMLelement parse(String html){
 		int n = html.length();
 		int index = 0;
@@ -41,7 +46,7 @@ public class HTMLparser{
 	
 				}
 				if(next==' '){
-					System.out.println("parsess");
+
 					next =  html.charAt(++index);
 					StringBuilder tmp = new StringBuilder();
 					while (next !='>'){
@@ -49,20 +54,15 @@ public class HTMLparser{
 							tmp.append(next);
 						}
 						else{
-							String s = tmp.toString();
-							System.out.println("parsing "+s);
+							parseAttrib(tmp,attrib);
 							tmp = new StringBuilder();
-							String [] split = s.split("=");
-							attrib.put(split[0],split[1]);
 						}
 
 						next =  html.charAt(++index);
 						if (next=='>'){
-							String s = tmp.toString();
-							System.out.println("parsing "+s);
+
+							parseAttrib(tmp,attrib);
 							tmp = new StringBuilder();
-							String [] split = s.split("=");
-							attrib.put(split[0],split[1]);
 						}
 
 					}
