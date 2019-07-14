@@ -7,7 +7,7 @@ public class HTMLelement{
 	private ArrayList<HTMLelement> children = new ArrayList<HTMLelement>();
 	private HTMLelement parent;	
 	private HashMap<String,String> attrib = new HashMap<>();
-	private String data;
+	private String data="";
 
 	public HTMLelement(String tag,HTMLelement parent){
 		this.tag = tag;

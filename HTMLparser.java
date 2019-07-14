@@ -13,10 +13,17 @@ public class HTMLparser{
 		HTMLelement root = new HTMLelement("ROOT");
 		Stack<HTMLelement> stack = new Stack<HTMLelement>();
 		stack.push(root);
+		StringBuilder data = new StringBuilder();
 		while(index<n){
 			char c = html.charAt(index);
 			System.out.println(c);
+			
 			if (c=='<'){
+				if (data.length()>0){
+					System.out.println(data.toString());
+					stack.peek().setData(data.toString());
+					data= new StringBuilder();
+				}
 				char next = html.charAt(++index);
 				Boolean endtag = false;
 				if(next=='/'){
@@ -24,20 +31,12 @@ public class HTMLparser{
 					next = html.charAt(++index);
 				}
 				StringBuilder tag = new StringBuilder();
-				StringBuilder data = new StringBuilder();
+				
 				while(index<n && next!=' ' && next!='>'){
-
 					//System.out.println(next);
 					tag.append(next);
 					next = html.charAt(++index);
-					/*
-					if (next=='>' && ++index<n && html.charAt(index)!='<'){
-						
-						while(html.charAt(index)!='<'){
-							data.append(html.charAt(index++));
-						}
-					}
-					*/
+	
 				}
 
 				if(endtag){
@@ -54,6 +53,10 @@ public class HTMLparser{
 				}
 				System.out.println( tag.toString());
 			}
+			else{
+				data.append(c);
+
+			}
 			index+=1;
 		}
 		return  root;
@@ -62,7 +65,7 @@ public class HTMLparser{
 	public static void traverse(HTMLelement e,int depth){
 		for(int i=0;i<depth;++i)System.out.print(" ");
 		System.out.println(e);
-		//System.out.println(e.getData());
+		if(e.getData().length()>0)System.out.println(e.getData());
 		for(HTMLelement h:e.getChildren()){
 			traverse(h,depth*2);
 		}
